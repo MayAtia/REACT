@@ -97,7 +97,7 @@ switch(type){
 
     }
 } 
-
+ 
 function evaluate({currentOperand,previousOperand,operation}){
 const prev = parseFloat (previousOperand)
 const Current =parseFloat(currentOperand)
