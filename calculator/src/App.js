@@ -12,27 +12,27 @@ export const ACTIONS ={
 }
 
 
-function reducer(state, {type, payload}){
-switch(type){
-    case ACTIONS.ADD_DIGIT:
-        if(state.overwrite){
-            return{
-                ...state,
-                currentOperand: payload.digit,
-                overwrite:false,
+function reducer(state, { type, payload }) {
+    switch (type) {
+        case ACTIONS.ADD_DIGIT:
+            if (state.overwrite) {
+                return {
+                    ...state,
+            currentOperand: payload.digit,
+            overwrite: false,
+                }
+          }  
+             if (payload.digit === "0" && state.currentOperand === "0") {
+              return state
+             }
+             if (payload.digit === "." && state.currentOperand.includes(".")) {
+             return state
             }
-        }
-        if (payload.digit ==="0 "&& state.currentOperand==="0"){
-            return state
-        }
-        if (payload.digit ==="0" && state.currentOperand.includes (".")){
-            return state
-        }
-
-        return {
+  
+         return {
             ...state,
-            currentOperand: `${state.currentOperand || ""}${payload.digit}`
-        }
+            currentOperand: `${state.currentOperand || ""}${payload.digit}`,
+             }
         case ACTIONS.CHOOSE_OPERATION:
             if (state.currentOperand == null && state.previousOperand == null){
                 return state
@@ -79,7 +79,7 @@ switch(type){
                 ...state,
                 currentOperand:state.currentOperand.slice(0, -1)
             }
-        case ACTIONS.EVALUATE:
+             case ACTIONS.EVALUATE:
             if(
                 state.operation == null ||
                 state.currentOperand == null ||
@@ -87,16 +87,17 @@ switch(type){
             ){
                 return state
             }
-            return {
+              return {
                 ...state,
                 overwrite:true,
                 previousOperand:null,
                 operation:null,
                 currentOperand :evaluate(state),
             }
+        }
 
     }
-} 
+ 
  
 function evaluate({currentOperand,previousOperand,operation}){
 const prev = parseFloat (previousOperand)
@@ -163,6 +164,7 @@ function App() {
             <button className="Span-Tow" onClick={() => dispatch ({type: ACTIONS.EVALUATE})}>=</button>
         </div>
     )
+
 }
 
 export default App
